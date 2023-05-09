@@ -1,7 +1,7 @@
 //requires
 const express = require('express')
 const dotenv = require('dotenv')
-const DataBase = require('./DataBase.js')
+//const DataBase = require('./DataBase.js')
 const { useRouter } = require('./routes/users.js')
 
 //configures the local env varibles
