@@ -22,7 +22,6 @@ pool.on('error', (err) => {
     throw new Error(err.message)
 })
 
-//All users By ID selection:
     //All users selection:
     async function poolAllUser() {
         const [results] = await pool.query(poolAllUsersQuery)
@@ -30,8 +29,7 @@ pool.on('error', (err) => {
         
     }
 
-//User By name selection:
-    //get user by id from DB
+    //get user by name from DB
     async function poolUser(userName) {
             const [results] = await pool.query(poolUserQuery ,[userName])
             return results
