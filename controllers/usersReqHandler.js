@@ -13,15 +13,15 @@ async function getAllUsers( req , res, next){
     next()
 }
 
-async function getUser(req , res, next){
+async function getUserByName(req , res, next){
     try{
-    const [user] = await DataBase.poolUser(req.params.userName)
+    const [user] = await DataBase.poolUser(req.params.name)
     console.log(user)
     res.status(200).send("OK")
     }
     catch(err){
         console.error(err.message)
-        res.status(500).send("Error creating new user")
+        res.status(500).send("Error getting the requsted user")
     }
     next()
 }
@@ -33,11 +33,10 @@ async function insertNewUser( req, res, next ){
         req.body.password,
         req.body.userName
         )
+    const [newUser] = await DataBase.poolUser(req.body.userName)
     console.log(newUser_data)
-    getUser(req.body.id).then((result) => {
-    console.log(result)
+    console.log(newUser.name)
     res.status(201).send("OK")
-})
     }
     catch(err){
         console.error(err.message)
@@ -62,5 +61,5 @@ module.exports = {
     getAllUsers,
     logInUser,
     insertNewUser,
-    getUser
+    getUserByName
 }

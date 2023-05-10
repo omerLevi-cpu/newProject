@@ -14,7 +14,8 @@ const poolAllUsersQuery = 'SELECT * FROM users'
 const poolUserQuery = 'SELECT * FROM users where users.name = ?'
 const insertUserQuery = 'INSERT INTO users (id, password ,name) VALUES (?, ?, ?)'
 const logInUserQuery = 'SELECT* FROM users WHERE users.name = ? AND users.password = ?'
-const deleteUserQuery = 'DELETE FROM `my_app`.`users` WHERE (`ID` = ?)'
+const deleteUserQuery = 'DELETE FROM my_app.users WHERE (users.id = ?)'
+const poolUsersTasks = 'SELECT * FROM tasks where tasks.userID = ?'
 
 const pool = db.createPool(connectInfo).promise()
 
