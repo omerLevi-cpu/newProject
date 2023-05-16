@@ -15,7 +15,9 @@ const poolUserQuery = 'SELECT * FROM users where users.name = ?'
 const insertUserQuery = 'INSERT INTO users (id, password ,name) VALUES (?, ?, ?)'
 const logInUserQuery = 'SELECT* FROM users WHERE users.name = ? AND users.password = ?'
 const deleteUserQuery = 'DELETE FROM my_app.users WHERE (users.id = ?)'
-const poolUsersTasks = 'SELECT * FROM tasks where tasks.userID = ?'
+const getUsersTasks = `SELECT t.name as task_name from tasks as t
+                        INNER JOIN users as u on u.ID = t.userId
+                        WHERE u.name = ?`
 
 const pool = db.createPool(connectInfo).promise()
 
@@ -49,9 +51,16 @@ pool.on('error', (err) => {
     }
 
 
+    async function poolUsersTasks(userName){
+        const [results] = await pool.query(getUsersTasks, [userName])
+        console.log(results)
+        return results
+    }
+
 module.exports = {
     poolAllUser,
     poolUser,
     setNewUser,
-    setLogInUser
+    setLogInUser,
+    poolUsersTasks
 }
