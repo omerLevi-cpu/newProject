@@ -22,15 +22,16 @@ app.use((req, res, next) => {
   });
 
 //in-case the server is down
-app.use((err, req, res, next) => {
+/*app.use((err, req, res, next) => {
     console.error(err.stack)
     res.sendStatus(500)
-})
+})*/
 
 //app is active and listening on port
 app.listen(3000, () => {
     console.log(`app is listening on port: ${PORT}`)
 })
+
 
 
 

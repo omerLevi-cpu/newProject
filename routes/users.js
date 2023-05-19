@@ -1,7 +1,7 @@
 const express = require('express')
 const userControl = require('../controllers/usersReqHandler.js')
-const tasksControl = require('../controllers/tasksReqHndler.js')
 const useRouter = express.Router()
+const { taskRouter } = require('./tasks.js')
 
 useRouter.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
@@ -10,12 +10,16 @@ useRouter.use((req, res, next) => {
     next();
   });
 
-useRouter.get("/:name/tasks", tasksControl.sendUserTasks)
+useRouter.use('/:name/tasks', (req, res, next) =>{
+  req.userName = req.params.name
+  next()
+}, taskRouter)
 
-useRouter.get("/:name", userControl.getUserByName)
-useRouter.post("/logon", userControl.logInUser)
-useRouter.get("/all", userControl.getAllUsers)
-useRouter.post("/createNewUser", userControl.insertNewUser)
-
+  
+  useRouter.post("/logon", userControl.logInUser)
+  useRouter.get("/all", userControl.getAllUsers)
+  useRouter.post("/createNewUser", userControl.insertNewUser)
+  useRouter.get("/:name", userControl.getUserByName)
+  
 
 module.exports = { useRouter }

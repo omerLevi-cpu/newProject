@@ -2,27 +2,26 @@ const DataBase = require('../DataBase.js')
 
 async function getAllUsers( req , res, next){
     try{
-        const [users] = await DataBase.poolAllUser()
-        console.log(users)
+        const users = await DataBase.poolAllUser()
         res.json(users)
     }
     catch(err){
         console.error(err.message)
-        res.status(500)
+        res.status(500).send("Error")
     }
-    next()
 }
 
 async function getUserByName(req , res, next){
     try{
-    const [user] = await DataBase.poolUser(req.params.name)
-    res.json(user)
+        console.log(req.params.name)
+        const [user] = await DataBase.poolUser(req.params.name)
+        console.log(user)
+        res.json(user)
     }
     catch(err){
         console.error(err.message)
         res.status(500).send("Error getting the requsted user")
     }
-    next()
 }
 
 async function insertNewUser( req, res, next ){
@@ -39,7 +38,6 @@ async function insertNewUser( req, res, next ){
         console.error(err.message)
         res.status(500).send("Error creating new user")
     }
-    next()
 }
 
 async function logInUser( req, res, next ){
@@ -47,12 +45,11 @@ async function logInUser( req, res, next ){
         const [loged_user] = await DataBase.setLogInUser( req.body.userName , req.body.password )
         console.log(`user ${loged_user.name} is loged in sucssesfuly!`)
         res.json(logged_user)
-        res.status(200).send('OK')
     }
     catch(err){
         console.error(err.message)
+        res.status(500).send(err.message)
     }
-    next()
 }
 
 module.exports = {
